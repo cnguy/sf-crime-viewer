@@ -1,0 +1,13 @@
+{
+  "name": "sf-crime-viewer",
+  "version": "1.0",
+  "description" : "A simple crime stats visualization web app for San Francisco",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0"
+  },
+  "scripts": {
+    "build": "babel app/static/js/App.js -o app/static/js/App.babelized.js"
+  }
+}

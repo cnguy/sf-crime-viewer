@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>California Crime Viewer</title>
+  <script src="https://unpkg.com/react@15.3.0/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15.3.0/dist/react-dom.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"></script>
+  <style type="text/css">
+    #root {
+      max-width: 800px;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="{{ url_for('static', filename='js/App.babelized.js') }}" type="text/babel"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATTseHucnvxtx_f-FoSALOvICvZ1XYMgw"
+    async defer></script>
+</body>
+</html>
