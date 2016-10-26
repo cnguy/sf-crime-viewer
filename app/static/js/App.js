@@ -103,29 +103,27 @@ function init(api_params, callback) {
 
 var CrimeMapApp = React.createClass({
   onFilterChange: function (data) {
+    // Clear markers. and reset markers[].
     for (var i = 0; i < markers.length; ++i) {
       markers[i].setMap(null);
     }
     markers = [];
 
+    // Logic for determining what api endpoint to use.
     var api_params = '';
-    if (data.year === 'all' && data.category === 'all') {
-      init(api_params, this.renderMap);
-    }
-    if (data.year != 'all' && data.year != null) {
+
+    if (data.year != 'all') {
+      // my api <= year -> category
       api_params += 'year/' + data.year;
 
       if (data.category != 'all') {
         api_params += '/category/' + data.category;
       }
     }
-    else if (data.category != 'all' && data.category != null) {
+    else if (data.category != 'all') {
       api_params += 'category/' + data.category;
     }
-    // make renderMap a more meaningful function?
-    // all my code is being created in init()
-    // change zoom level to center on SF always
-    // clean up trailing '/' urls. make it consistent.
+
     init(api_params, this.renderMap);
   },
 
@@ -133,10 +131,6 @@ var CrimeMapApp = React.createClass({
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: config.mapZoomLevel,
       center: new google.maps.LatLng(config.initialLat, config.initialLon),
-    });
-
-    map.addListener('zoom_changed', function () {
-      console.log(map.getZoom());
     });
 
     for (var i = 0; i < data.length; ++i) {
