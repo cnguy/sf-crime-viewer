@@ -19,22 +19,22 @@ class CrimeIncident(Resource):
 
 class FilterByCategoryCrimeIncident(Resource):
     def get(self, category):
-        filtered = [each for each in getData() if each['category'] == category.upper()]
-        return filtered
+        data = getData()
+        return [crime for crime in data if crime['category'] == category.upper()]
 
 
 class FilterByYearCrimeIncident(Resource):
     def get(self, year):
-        filtered = [each for each in getData() if each['date'][0:4] == year]
-        return filtered
+        data = getData()
+        return [crime for crime in data if crime['date'][0:4] == year]
 
 
 class DoubleFilterCrimeIncident(Resource):
     def get(self, year, category):
-        filtered = [
-            each for each in getData() if each['date'][0:4] == year and each['category'] == category.upper()
+        data = getData()
+        return [
+            crime for crime in data if crime['date'][0:4] == year and crime['category'] == category.upper()
         ]
-        return filtered
 
 api.add_resource(CrimeIncident, api_base_url + 'crime/')
 api.add_resource(FilterByCategoryCrimeIncident, api_base_url + 'crime/category/<string:category>')

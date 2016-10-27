@@ -119,8 +119,7 @@ var CrimeMapApp = React.createClass({
       if (data.category != 'all') {
         api_params += '/category/' + data.category;
       }
-    }
-    else if (data.category != 'all') {
+    } else if (data.category != 'all') {
       api_params += 'category/' + data.category;
     }
 
@@ -168,7 +167,6 @@ var CrimeMapApp = React.createClass({
       </div>
     );
   }
-
 });
 
 ReactDOM.render(
