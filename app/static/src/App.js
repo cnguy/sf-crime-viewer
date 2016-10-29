@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 let map;
 const config = {
   initialLat: 37.7622550270122,
@@ -119,7 +122,7 @@ class CrimeMap extends BaseComponent {
 
   onFilterChange(data) {
     // Clear markers. and reset markers[].
-    for (let marker in markers) {
+    for (let marker of markers) {
       marker.setMap(null);
     }
     markers = [];
