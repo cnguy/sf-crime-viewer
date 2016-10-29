@@ -21445,9 +21445,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CrimeMap = __webpack_require__(173);
+	var _SFCrimeViewer = __webpack_require__(173);
 
-	var _CrimeMap2 = _interopRequireDefault(_CrimeMap);
+	var _SFCrimeViewer2 = _interopRequireDefault(_SFCrimeViewer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21472,7 +21472,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'App' },
-	        _react2.default.createElement(_CrimeMap2.default, null)
+	        _react2.default.createElement(_SFCrimeViewer2.default, null)
 	      );
 	    }
 	  }]);
@@ -21502,7 +21502,11 @@
 
 	var _CrimeFilter2 = _interopRequireDefault(_CrimeFilter);
 
-	var _Header = __webpack_require__(176);
+	var _CrimeMap = __webpack_require__(176);
+
+	var _CrimeMap2 = _interopRequireDefault(_CrimeMap);
+
+	var _Header = __webpack_require__(177);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
@@ -21518,163 +21522,42 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var map = void 0;
-	var config = {
-	  initialLat: 37.7622550270122,
-	  initialLon: -122.446837820235,
-	  mapZoomLevel: 13
-	};
+	var SFCrimeViewer = function (_BaseComponent) {
+	  _inherits(SFCrimeViewer, _BaseComponent);
 
-	var markers = [];
-	var api_base_link = 'api/crime/';
+	  function SFCrimeViewer() {
+	    _classCallCheck(this, SFCrimeViewer);
 
-	function loadJSON(callback, api_link) {
-	  var xobj = new XMLHttpRequest();
-	  xobj.overrideMimeType("application/json");
-	  xobj.open('GET', api_link, true);
-	  xobj.onreadystatechange = function () {
-	    if (xobj.readyState == 4 && xobj.status === 200) {
-	      callback(xobj.responseText);
-	    }
-	  };
-	  xobj.send(null);
-	}
+	    var _this = _possibleConstructorReturn(this, (SFCrimeViewer.__proto__ || Object.getPrototypeOf(SFCrimeViewer)).call(this));
 
-	function init(api_params, callback) {
-	  loadJSON(function (response) {
-	    var data = JSON.parse(response);
-	    callback(data);
-	  }, api_base_link + api_params);
-	}
-
-	var CrimeMap = function (_BaseComponent) {
-	  _inherits(CrimeMap, _BaseComponent);
-
-	  function CrimeMap() {
-	    _classCallCheck(this, CrimeMap);
-
-	    var _this = _possibleConstructorReturn(this, (CrimeMap.__proto__ || Object.getPrototypeOf(CrimeMap)).call(this));
-
-	    _this._bind('onFilterChange', 'renderMap');
+	    _this.state = { category: 'all', year: 'all' };
+	    _this._bind('onFilterChange');
 	    return _this;
 	  }
 
-	  _createClass(CrimeMap, [{
+	  _createClass(SFCrimeViewer, [{
 	    key: 'onFilterChange',
 	    value: function onFilterChange(data) {
-	      // Clear markers. and reset markers[].
-	      var _iteratorNormalCompletion = true;
-	      var _didIteratorError = false;
-	      var _iteratorError = undefined;
-
-	      try {
-	        for (var _iterator = markers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var marker = _step.value;
-
-	          marker.setMap(null);
-	        }
-	      } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion && _iterator.return) {
-	            _iterator.return();
-	          }
-	        } finally {
-	          if (_didIteratorError) {
-	            throw _iteratorError;
-	          }
-	        }
-	      }
-
-	      markers = [];
-
-	      // Logic for determining what api endpoint to use.
-	      var api_params = '';
-
-	      if (data.year != 'all') {
-	        // my api <= year -> category
-	        api_params += 'year/' + data.year;
-
-	        if (data.category != 'all') {
-	          api_params += '/category/' + data.category;
-	        }
-	      } else if (data.category != 'all') {
-	        api_params += 'category/' + data.category;
-	      }
-
-	      init(api_params, this.renderMap);
-	    }
-	  }, {
-	    key: 'renderMap',
-	    value: function renderMap(data) {
-	      map = new google.maps.Map(document.getElementById('map'), {
-	        zoom: config.mapZoomLevel,
-	        center: new google.maps.LatLng(config.initialLat, config.initialLon)
-	      });
-
-	      var _iteratorNormalCompletion2 = true;
-	      var _didIteratorError2 = false;
-	      var _iteratorError2 = undefined;
-
-	      try {
-	        for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	          var crime = _step2.value;
-
-	          markers.push(new google.maps.Marker({
-	            position: new google.maps.LatLng(crime.location.latitude, crime.location.longitude),
-	            title: crime.category
-	          }));
-	        }
-	      } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	            _iterator2.return();
-	          }
-	        } finally {
-	          if (_didIteratorError2) {
-	            throw _iteratorError2;
-	          }
-	        }
-	      }
-
-	      var markerCluster = new MarkerClusterer(map, markers, {
-	        gridSize: 100,
-	        minimumClusterSize: 5,
-	        imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-	      });
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      init('', this.renderMap);
+	      this.setState(data);
+	      console.log(this.state);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var style = {
-	        width: "100vw",
-	        height: "100vh"
-	      };
-
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(_Header2.default, null),
 	        _react2.default.createElement(_CrimeFilter2.default, { onFilterChange: this.onFilterChange }),
-	        _react2.default.createElement('div', { id: 'map', style: style })
+	        _react2.default.createElement(_CrimeMap2.default, { data: this.state })
 	      );
 	    }
 	  }]);
 
-	  return CrimeMap;
+	  return SFCrimeViewer;
 	}(_BaseComponent3.default);
 
-	exports.default = CrimeMap;
+	exports.default = SFCrimeViewer;
 
 /***/ },
 /* 174 */
@@ -21894,12 +21777,12 @@
 	          ),
 	          _react2.default.createElement(
 	            'option',
-	            { value: '2013' },
+	            { value: '2014' },
 	            '2014'
 	          ),
 	          _react2.default.createElement(
 	            'option',
-	            { value: '2013' },
+	            { value: '2015' },
 	            '2015'
 	          )
 	        ),
@@ -21972,6 +21855,180 @@
 
 /***/ },
 /* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _BaseComponent2 = __webpack_require__(175);
+
+	var _BaseComponent3 = _interopRequireDefault(_BaseComponent2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var map = void 0;
+	var config = {
+	    initialLat: 37.7622550270122,
+	    initialLon: -122.446837820235,
+	    mapZoomLevel: 13
+	};
+
+	var markers = [];
+	var api_base_link = 'api/crime/';
+
+	function loadJSON(callback, api_link) {
+	    var xobj = new XMLHttpRequest();
+	    xobj.overrideMimeType("application/json");
+	    xobj.open('GET', api_link, true);
+	    xobj.onreadystatechange = function () {
+	        if (xobj.readyState == 4 && xobj.status === 200) {
+	            callback(xobj.responseText);
+	        }
+	    };
+	    xobj.send(null);
+	}
+
+	function init(api_params, callback) {
+	    loadJSON(function (response) {
+	        var data = JSON.parse(response);
+	        callback(data);
+	    }, api_base_link + api_params);
+	}
+
+	var CrimeMap = function (_BaseComponent) {
+	    _inherits(CrimeMap, _BaseComponent);
+
+	    function CrimeMap() {
+	        _classCallCheck(this, CrimeMap);
+
+	        return _possibleConstructorReturn(this, (CrimeMap.__proto__ || Object.getPrototypeOf(CrimeMap)).apply(this, arguments));
+	    }
+
+	    _createClass(CrimeMap, [{
+	        key: 'renderMap',
+	        value: function renderMap(data) {
+	            map = new google.maps.Map(document.getElementById('map'), {
+	                zoom: config.mapZoomLevel,
+	                center: new google.maps.LatLng(config.initialLat, config.initialLon)
+	            });
+
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+
+	            try {
+	                for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var crime = _step.value;
+
+	                    markers.push(new google.maps.Marker({
+	                        position: new google.maps.LatLng(crime.location.latitude, crime.location.longitude),
+	                        title: crime.category
+	                    }));
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+
+	            var markerCluster = new MarkerClusterer(map, markers, {
+	                gridSize: 100,
+	                minimumClusterSize: 5,
+	                imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            init('', this.renderMap);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var style = {
+	                width: "100vw",
+	                height: "100vh"
+	            };
+
+	            // Clear markers. and reset markers[].
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+
+	            try {
+	                for (var _iterator2 = markers[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var marker = _step2.value;
+
+	                    marker.setMap(null);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+
+	            markers = [];
+
+	            // Logic for determining what api endpoint to use.
+	            var api_params = '';
+
+	            if (this.props.data.year != 'all') {
+	                // my api <= year -> category
+	                api_params += 'year/' + this.props.data.year;
+
+	                if (this.props.data.category != 'all') {
+	                    api_params += '/category/' + this.props.data.category;
+	                }
+	            } else if (this.props.data.category != 'all') {
+	                api_params += 'category/' + this.props.data.category;
+	            }
+
+	            init(api_params, this.renderMap);
+
+	            return _react2.default.createElement('div', { id: 'map', style: style });
+	        }
+	    }]);
+
+	    return CrimeMap;
+	}(_BaseComponent3.default);
+
+	exports.default = CrimeMap;
+
+/***/ },
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
