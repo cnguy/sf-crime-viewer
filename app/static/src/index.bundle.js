@@ -46,8 +46,6 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -56,460 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _App = __webpack_require__(172);
+
+	var _App2 = _interopRequireDefault(_App);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var map = void 0;
-	var config = {
-	  initialLat: 37.7622550270122,
-	  initialLon: -122.446837820235,
-	  mapZoomLevel: 13
-	};
-
-	var BaseComponent = function (_React$Component) {
-	  _inherits(BaseComponent, _React$Component);
-
-	  function BaseComponent() {
-	    _classCallCheck(this, BaseComponent);
-
-	    return _possibleConstructorReturn(this, (BaseComponent.__proto__ || Object.getPrototypeOf(BaseComponent)).apply(this, arguments));
-	  }
-
-	  _createClass(BaseComponent, [{
-	    key: '_bind',
-	    value: function _bind() {
-	      var _this2 = this;
-
-	      for (var _len = arguments.length, methods = Array(_len), _key = 0; _key < _len; _key++) {
-	        methods[_key] = arguments[_key];
-	      }
-
-	      methods.forEach(function (method) {
-	        return _this2[method] = _this2[method].bind(_this2);
-	      });
-	    }
-	  }]);
-
-	  return BaseComponent;
-	}(_react2.default.Component);
-
-	var Header = function (_React$Component2) {
-	  _inherits(Header, _React$Component2);
-
-	  function Header() {
-	    _classCallCheck(this, Header);
-
-	    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
-	  }
-
-	  _createClass(Header, [{
-	    key: 'render',
-	    value: function render() {
-	      var msg = "San Francisco Crime Map";
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'header' },
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          msg
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Header;
-	}(_react2.default.Component);
-
-	var CrimeFilter = function (_BaseComponent) {
-	  _inherits(CrimeFilter, _BaseComponent);
-
-	  function CrimeFilter(props) {
-	    _classCallCheck(this, CrimeFilter);
-
-	    var _this4 = _possibleConstructorReturn(this, (CrimeFilter.__proto__ || Object.getPrototypeOf(CrimeFilter)).call(this, props));
-
-	    _this4.state = { category: 'all', year: 'all' };
-	    _this4._bind('handleCategoryChange', 'handleYearChange', 'handleSubmit');
-	    return _this4;
-	  }
-
-	  _createClass(CrimeFilter, [{
-	    key: 'handleCategoryChange',
-	    value: function handleCategoryChange(e) {
-	      this.setState({ category: e.target.value });
-	    }
-	  }, {
-	    key: 'handleYearChange',
-	    value: function handleYearChange(e) {
-	      this.setState({ year: e.target.value });
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
-	      var category = this.state.category;
-	      var year = this.state.year;
-	      this.props.onFilterChange({ category: category, year: year });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'form',
-	        { className: 'filterForm' },
-	        _react2.default.createElement(
-	          'select',
-	          { id: 'category', onChange: this.handleCategoryChange, value: this.state.category },
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'all' },
-	            'All'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'assault' },
-	            'Assault'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'driving under the influence' },
-	            'DUI'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'vehicle theft' },
-	            'Vehicle Theft'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'non-criminal' },
-	            'Non-Criminal'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'warrants' },
-	            'Warrants'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'drug/narcotic' },
-	            'Drug/Narcotic'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'missing person' },
-	            'Missing Person'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'weapon laws' },
-	            'Weapon Laws'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'burglary' },
-	            'Burglary'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'vandalism' },
-	            'Vandalism'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'arson' },
-	            'Arson'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'suspicious occ' },
-	            'Suspicious Occasion'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'sex offenses, forcible' },
-	            'Sex Offenses, Forcible'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'robbery' },
-	            'Robbery'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'trespass' },
-	            'Trespass'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'prostitution' },
-	            'Prostitution'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'forgery/counterfeiting' },
-	            'Forgery/Counterfeiting'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'other offenses' },
-	            'Other Offenses'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'select',
-	          { id: 'year', onChange: this.handleYearChange, value: this.state.year },
-	          _react2.default.createElement(
-	            'option',
-	            { value: 'all' },
-	            'All'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2005' },
-	            '2005'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2006' },
-	            '2006'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2007' },
-	            '2007'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2008' },
-	            '2008'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2009' },
-	            '2009'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2010' },
-	            '2010'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2011' },
-	            '2011'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2012' },
-	            '2012'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2013' },
-	            '2013'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2013' },
-	            '2014'
-	          ),
-	          _react2.default.createElement(
-	            'option',
-	            { value: '2013' },
-	            '2015'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', onClick: this.handleSubmit },
-	          'Filter'
-	        )
-	      );
-	    }
-	  }]);
-
-	  return CrimeFilter;
-	}(BaseComponent);
-
-	var markers = [];
-	var api_base_link = 'api/crime/';
-
-	function loadJSON(callback, api_link) {
-	  var xobj = new XMLHttpRequest();
-	  xobj.overrideMimeType("application/json");
-	  xobj.open('GET', api_link, true);
-	  xobj.onreadystatechange = function () {
-	    if (xobj.readyState == 4 && xobj.status === 200) {
-	      callback(xobj.responseText);
-	    }
-	  };
-	  xobj.send(null);
-	}
-
-	function init(api_params, callback) {
-	  loadJSON(function (response) {
-	    var data = JSON.parse(response);
-	    callback(data);
-	  }, api_base_link + api_params);
-	}
-
-	var CrimeMap = function (_BaseComponent2) {
-	  _inherits(CrimeMap, _BaseComponent2);
-
-	  function CrimeMap() {
-	    _classCallCheck(this, CrimeMap);
-
-	    var _this5 = _possibleConstructorReturn(this, (CrimeMap.__proto__ || Object.getPrototypeOf(CrimeMap)).call(this));
-
-	    _this5._bind('onFilterChange', 'renderMap');
-	    return _this5;
-	  }
-
-	  _createClass(CrimeMap, [{
-	    key: 'onFilterChange',
-	    value: function onFilterChange(data) {
-	      // Clear markers. and reset markers[].
-	      var _iteratorNormalCompletion = true;
-	      var _didIteratorError = false;
-	      var _iteratorError = undefined;
-
-	      try {
-	        for (var _iterator = markers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var marker = _step.value;
-
-	          marker.setMap(null);
-	        }
-	      } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion && _iterator.return) {
-	            _iterator.return();
-	          }
-	        } finally {
-	          if (_didIteratorError) {
-	            throw _iteratorError;
-	          }
-	        }
-	      }
-
-	      markers = [];
-
-	      // Logic for determining what api endpoint to use.
-	      var api_params = '';
-
-	      if (data.year != 'all') {
-	        // my api <= year -> category
-	        api_params += 'year/' + data.year;
-
-	        if (data.category != 'all') {
-	          api_params += '/category/' + data.category;
-	        }
-	      } else if (data.category != 'all') {
-	        api_params += 'category/' + data.category;
-	      }
-
-	      init(api_params, this.renderMap);
-	    }
-	  }, {
-	    key: 'renderMap',
-	    value: function renderMap(data) {
-	      map = new google.maps.Map(document.getElementById('map'), {
-	        zoom: config.mapZoomLevel,
-	        center: new google.maps.LatLng(config.initialLat, config.initialLon)
-	      });
-
-	      var _iteratorNormalCompletion2 = true;
-	      var _didIteratorError2 = false;
-	      var _iteratorError2 = undefined;
-
-	      try {
-	        for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	          var crime = _step2.value;
-
-	          markers.push(new google.maps.Marker({
-	            position: new google.maps.LatLng(crime.location.latitude, crime.location.longitude),
-	            title: crime.category
-	          }));
-	        }
-	      } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	            _iterator2.return();
-	          }
-	        } finally {
-	          if (_didIteratorError2) {
-	            throw _iteratorError2;
-	          }
-	        }
-	      }
-
-	      var markerCluster = new MarkerClusterer(map, markers, {
-	        gridSize: 100,
-	        minimumClusterSize: 5,
-	        imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-	      });
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      init('', this.renderMap);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var style = {
-	        width: "100vw",
-	        height: "100vh"
-	      };
-
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(Header, null),
-	        _react2.default.createElement(CrimeFilter, { onFilterChange: this.onFilterChange }),
-	        _react2.default.createElement('div', { id: 'map', style: style })
-	      );
-	    }
-	  }]);
-
-	  return CrimeMap;
-	}(BaseComponent);
-
-	var App = function (_React$Component3) {
-	  _inherits(App, _React$Component3);
-
-	  function App() {
-	    _classCallCheck(this, App);
-
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-	  }
-
-	  _createClass(App, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'App' },
-	        _react2.default.createElement(CrimeMap, null)
-	      );
-	    }
-	  }]);
-
-	  return App;
-	}(_react2.default.Component);
-
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('root'));
 
 /***/ },
 /* 1 */
@@ -21877,6 +21428,865 @@
 
 	module.exports = ReactDOMNullInputValuePropHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _CrimeMap = __webpack_require__(173);
+
+	var _CrimeMap2 = _interopRequireDefault(_CrimeMap);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// let map;
+	// const config = {
+	//   initialLat: 37.7622550270122,
+	//   initialLon: -122.446837820235,
+	//   mapZoomLevel: 13
+	// };
+
+	// class BaseComponent extends React.Component {
+	//   _bind(...methods) {
+	//     methods.forEach((method) => this[method] = this[method].bind(this));
+	//   }
+	// }
+
+	// class Header extends React.Component {
+	//   render() {
+	//     const msg = "San Francisco Crime Map";
+	//     return (
+	//       <div className="header">
+	//         <h1>{msg}</h1>
+	//       </div>
+	//     );
+	//   }
+	// }
+
+	// class CrimeFilter extends BaseComponent {
+	//   constructor(props) {
+	//     super(props);
+	//     this.state = { category: 'all', year: 'all' };
+	//     this._bind('handleCategoryChange', 'handleYearChange', 'handleSubmit');
+	//   }
+
+	//   handleCategoryChange(e) {
+	//     this.setState({ category: e.target.value });
+	//   }
+
+	//   handleYearChange(e) {
+	//     this.setState({ year: e.target.value });
+	//   }
+
+	//   handleSubmit(e) {
+	//     const category = this.state.category;
+	//     const year = this.state.year;
+	//     this.props.onFilterChange({ category: category, year: year });
+	//   }
+
+	//   render() {
+	//     return (
+	//       <form className="filterForm">
+	//         <select id="category" onChange={this.handleCategoryChange} value={this.state.category}>
+	//           <option value="all">All</option>
+	//           <option value="assault">Assault</option>
+	//           <option value="driving under the influence">DUI</option>
+	//           <option value="vehicle theft">Vehicle Theft</option>
+	//           <option value="non-criminal">Non-Criminal</option>
+	//           <option value="warrants">Warrants</option>
+	//           <option value="drug/narcotic">Drug/Narcotic</option>
+	//           <option value="missing person">Missing Person</option>
+	//           <option value="weapon laws">Weapon Laws</option>
+	//           <option value="burglary">Burglary</option>
+	//           <option value="vandalism">Vandalism</option>
+	//           <option value="arson">Arson</option>
+	//           <option value="suspicious occ">Suspicious Occasion</option>
+	//           <option value="sex offenses, forcible">Sex Offenses, Forcible</option>
+	//           <option value="robbery">Robbery</option>
+	//           <option value="trespass">Trespass</option>
+	//           <option value="prostitution">Prostitution</option>
+	//           <option value="forgery/counterfeiting">Forgery/Counterfeiting</option>
+	//           <option value="other offenses">Other Offenses</option>
+	//         </select>
+
+	//         <select id="year" onChange={this.handleYearChange} value={this.state.year}>
+	//           <option value="all">All</option>
+	//           <option value="2005">2005</option>
+	//           <option value="2006">2006</option>
+	//           <option value="2007">2007</option>
+	//           <option value="2008">2008</option>
+	//           <option value="2009">2009</option>
+	//           <option value="2010">2010</option>
+	//           <option value="2011">2011</option>
+	//           <option value="2012">2012</option>
+	//           <option value="2013">2013</option>
+	//           <option value="2013">2014</option>
+	//           <option value="2013">2015</option>
+	//         </select>
+
+	//         <button type="button" onClick={this.handleSubmit}>Filter</button>
+	//       </form>
+	//     );
+	//   }
+	// }
+
+	// let markers = [];
+	// const api_base_link = 'api/crime/';
+
+	// function loadJSON(callback, api_link) {
+	//   const xobj = new XMLHttpRequest();
+	//   xobj.overrideMimeType("application/json");
+	//   xobj.open('GET', api_link, true);
+	//   xobj.onreadystatechange = function () {
+	//     if (xobj.readyState == 4 && xobj.status === 200) {
+	//       callback(xobj.responseText);
+	//     }
+	//   };
+	//   xobj.send(null);
+	// }
+
+	// function init(api_params, callback) {
+	//   loadJSON(function (response) {
+	//     const data = JSON.parse(response);
+	//     callback(data);
+	//   }, api_base_link + api_params);
+	// }
+
+	// class CrimeMap extends BaseComponent {
+	//   constructor() {
+	//     super();
+	//     this._bind('onFilterChange', 'renderMap');
+	//   }
+
+	//   onFilterChange(data) {
+	//     // Clear markers. and reset markers[].
+	//     for (let marker of markers) {
+	//       marker.setMap(null);
+	//     }
+	//     markers = [];
+
+	//     // Logic for determining what api endpoint to use.
+	//     let api_params = '';
+
+	//     if (data.year != 'all') {
+	//       // my api <= year -> category
+	//       api_params += 'year/' + data.year;
+
+	//       if (data.category != 'all') {
+	//         api_params += '/category/' + data.category;
+	//       }
+	//     } else if (data.category != 'all') {
+	//       api_params += 'category/' + data.category;
+	//     }
+
+	//     init(api_params, this.renderMap);
+	//   }
+
+	//   renderMap(data) {
+	//     map = new google.maps.Map(document.getElementById('map'), {
+	//       zoom: config.mapZoomLevel,
+	//       center: new google.maps.LatLng(config.initialLat, config.initialLon),
+	//     });
+
+	//     for (let crime of data) {
+	//       markers.push(new google.maps.Marker({
+	//         position: new google.maps.LatLng(
+	//           crime.location.latitude,
+	//           crime.location.longitude
+	//         ),
+	//         title: crime.category
+	//       }));
+	//     }
+
+	//     const markerCluster = new MarkerClusterer(map, markers, {
+	//       gridSize: 100,
+	//       minimumClusterSize: 5,
+	//       imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m',
+	//     });
+	//   }
+
+	//   componentDidMount() {
+	//     init('', this.renderMap);
+	//   }
+
+	//   render() {
+	//     const style = {
+	//       width: "100vw",
+	//       height: "100vh"
+	//     };
+
+	//     return (
+	//       <div>
+	//         <Header />
+	//         <CrimeFilter onFilterChange={this.onFilterChange} />
+	//         <div id="map" style={style}></div>
+	//       </div>
+	//     );
+	//   }
+	// }
+
+	var App = function (_React$Component) {
+	  _inherits(App, _React$Component);
+
+	  function App() {
+	    _classCallCheck(this, App);
+
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	  }
+
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'App' },
+	        _react2.default.createElement(_CrimeMap2.default, null)
+	      );
+	    }
+	  }]);
+
+	  return App;
+	}(_react2.default.Component);
+
+	exports.default = App;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _CrimeFilter = __webpack_require__(174);
+
+	var _CrimeFilter2 = _interopRequireDefault(_CrimeFilter);
+
+	var _Header = __webpack_require__(176);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _BaseComponent2 = __webpack_require__(175);
+
+	var _BaseComponent3 = _interopRequireDefault(_BaseComponent2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var map = void 0;
+	var config = {
+	  initialLat: 37.7622550270122,
+	  initialLon: -122.446837820235,
+	  mapZoomLevel: 13
+	};
+
+	// class Header extends React.Component {
+	//   render() {
+	//     const msg = "San Francisco Crime Map";
+	//     return (
+	//       <div className="header">
+	//         <h1>{msg}</h1>
+	//       </div>
+	//     );
+	//   }
+	// }
+
+	// class CrimeFilter extends BaseComponent {
+	//   constructor(props) {
+	//     super(props);
+	//     this.state = { category: 'all', year: 'all' };
+	//     this._bind('handleCategoryChange', 'handleYearChange', 'handleSubmit');
+	//   }
+
+	//   handleCategoryChange(e) {
+	//     this.setState({ category: e.target.value });
+	//   }
+
+	//   handleYearChange(e) {
+	//     this.setState({ year: e.target.value });
+	//   }
+
+	//   handleSubmit(e) {
+	//     const category = this.state.category;
+	//     const year = this.state.year;
+	//     this.props.onFilterChange({ category: category, year: year });
+	//   }
+
+	//   render() {
+	//     return (
+	//       <form className="filterForm">
+	//         <select id="category" onChange={this.handleCategoryChange} value={this.state.category}>
+	//           <option value="all">All</option>
+	//           <option value="assault">Assault</option>
+	//           <option value="driving under the influence">DUI</option>
+	//           <option value="vehicle theft">Vehicle Theft</option>
+	//           <option value="non-criminal">Non-Criminal</option>
+	//           <option value="warrants">Warrants</option>
+	//           <option value="drug/narcotic">Drug/Narcotic</option>
+	//           <option value="missing person">Missing Person</option>
+	//           <option value="weapon laws">Weapon Laws</option>
+	//           <option value="burglary">Burglary</option>
+	//           <option value="vandalism">Vandalism</option>
+	//           <option value="arson">Arson</option>
+	//           <option value="suspicious occ">Suspicious Occasion</option>
+	//           <option value="sex offenses, forcible">Sex Offenses, Forcible</option>
+	//           <option value="robbery">Robbery</option>
+	//           <option value="trespass">Trespass</option>
+	//           <option value="prostitution">Prostitution</option>
+	//           <option value="forgery/counterfeiting">Forgery/Counterfeiting</option>
+	//           <option value="other offenses">Other Offenses</option>
+	//         </select>
+
+	//         <select id="year" onChange={this.handleYearChange} value={this.state.year}>
+	//           <option value="all">All</option>
+	//           <option value="2005">2005</option>
+	//           <option value="2006">2006</option>
+	//           <option value="2007">2007</option>
+	//           <option value="2008">2008</option>
+	//           <option value="2009">2009</option>
+	//           <option value="2010">2010</option>
+	//           <option value="2011">2011</option>
+	//           <option value="2012">2012</option>
+	//           <option value="2013">2013</option>
+	//           <option value="2013">2014</option>
+	//           <option value="2013">2015</option>
+	//         </select>
+
+	//         <button type="button" onClick={this.handleSubmit}>Filter</button>
+	//       </form>
+	//     );
+	//   }
+	// }
+
+	var markers = [];
+	var api_base_link = 'api/crime/';
+
+	function loadJSON(callback, api_link) {
+	  var xobj = new XMLHttpRequest();
+	  xobj.overrideMimeType("application/json");
+	  xobj.open('GET', api_link, true);
+	  xobj.onreadystatechange = function () {
+	    if (xobj.readyState == 4 && xobj.status === 200) {
+	      callback(xobj.responseText);
+	    }
+	  };
+	  xobj.send(null);
+	}
+
+	function init(api_params, callback) {
+	  loadJSON(function (response) {
+	    var data = JSON.parse(response);
+	    callback(data);
+	  }, api_base_link + api_params);
+	}
+
+	var CrimeMap = function (_BaseComponent) {
+	  _inherits(CrimeMap, _BaseComponent);
+
+	  function CrimeMap() {
+	    _classCallCheck(this, CrimeMap);
+
+	    var _this = _possibleConstructorReturn(this, (CrimeMap.__proto__ || Object.getPrototypeOf(CrimeMap)).call(this));
+
+	    _this._bind('onFilterChange', 'renderMap');
+	    return _this;
+	  }
+
+	  _createClass(CrimeMap, [{
+	    key: 'onFilterChange',
+	    value: function onFilterChange(data) {
+	      // Clear markers. and reset markers[].
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = markers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var marker = _step.value;
+
+	          marker.setMap(null);
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+
+	      markers = [];
+
+	      // Logic for determining what api endpoint to use.
+	      var api_params = '';
+
+	      if (data.year != 'all') {
+	        // my api <= year -> category
+	        api_params += 'year/' + data.year;
+
+	        if (data.category != 'all') {
+	          api_params += '/category/' + data.category;
+	        }
+	      } else if (data.category != 'all') {
+	        api_params += 'category/' + data.category;
+	      }
+
+	      init(api_params, this.renderMap);
+	    }
+	  }, {
+	    key: 'renderMap',
+	    value: function renderMap(data) {
+	      map = new google.maps.Map(document.getElementById('map'), {
+	        zoom: config.mapZoomLevel,
+	        center: new google.maps.LatLng(config.initialLat, config.initialLon)
+	      });
+
+	      var _iteratorNormalCompletion2 = true;
+	      var _didIteratorError2 = false;
+	      var _iteratorError2 = undefined;
+
+	      try {
+	        for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	          var crime = _step2.value;
+
+	          markers.push(new google.maps.Marker({
+	            position: new google.maps.LatLng(crime.location.latitude, crime.location.longitude),
+	            title: crime.category
+	          }));
+	        }
+	      } catch (err) {
+	        _didIteratorError2 = true;
+	        _iteratorError2 = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	            _iterator2.return();
+	          }
+	        } finally {
+	          if (_didIteratorError2) {
+	            throw _iteratorError2;
+	          }
+	        }
+	      }
+
+	      var markerCluster = new MarkerClusterer(map, markers, {
+	        gridSize: 100,
+	        minimumClusterSize: 5,
+	        imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      init('', this.renderMap);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var style = {
+	        width: "100vw",
+	        height: "100vh"
+	      };
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_Header2.default, null),
+	        _react2.default.createElement(_CrimeFilter2.default, { onFilterChange: this.onFilterChange }),
+	        _react2.default.createElement('div', { id: 'map', style: style })
+	      );
+	    }
+	  }]);
+
+	  return CrimeMap;
+	}(_BaseComponent3.default);
+
+	exports.default = CrimeMap;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _BaseComponent2 = __webpack_require__(175);
+
+	var _BaseComponent3 = _interopRequireDefault(_BaseComponent2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CrimeFilter = function (_BaseComponent) {
+	  _inherits(CrimeFilter, _BaseComponent);
+
+	  function CrimeFilter(props) {
+	    _classCallCheck(this, CrimeFilter);
+
+	    var _this = _possibleConstructorReturn(this, (CrimeFilter.__proto__ || Object.getPrototypeOf(CrimeFilter)).call(this, props));
+
+	    _this.state = { category: 'all', year: 'all' };
+	    _this._bind('handleCategoryChange', 'handleYearChange', 'handleSubmit');
+	    return _this;
+	  }
+
+	  _createClass(CrimeFilter, [{
+	    key: 'handleCategoryChange',
+	    value: function handleCategoryChange(e) {
+	      this.setState({ category: e.target.value });
+	    }
+	  }, {
+	    key: 'handleYearChange',
+	    value: function handleYearChange(e) {
+	      this.setState({ year: e.target.value });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      var category = this.state.category;
+	      var year = this.state.year;
+	      this.props.onFilterChange({ category: category, year: year });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        { className: 'filterForm' },
+	        _react2.default.createElement(
+	          'select',
+	          { id: 'category', onChange: this.handleCategoryChange, value: this.state.category },
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'all' },
+	            'All'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'assault' },
+	            'Assault'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'driving under the influence' },
+	            'DUI'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'vehicle theft' },
+	            'Vehicle Theft'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'non-criminal' },
+	            'Non-Criminal'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'warrants' },
+	            'Warrants'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'drug/narcotic' },
+	            'Drug/Narcotic'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'missing person' },
+	            'Missing Person'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'weapon laws' },
+	            'Weapon Laws'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'burglary' },
+	            'Burglary'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'vandalism' },
+	            'Vandalism'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'arson' },
+	            'Arson'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'suspicious occ' },
+	            'Suspicious Occasion'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'sex offenses, forcible' },
+	            'Sex Offenses, Forcible'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'robbery' },
+	            'Robbery'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'trespass' },
+	            'Trespass'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'prostitution' },
+	            'Prostitution'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'forgery/counterfeiting' },
+	            'Forgery/Counterfeiting'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'other offenses' },
+	            'Other Offenses'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'select',
+	          { id: 'year', onChange: this.handleYearChange, value: this.state.year },
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'all' },
+	            'All'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2005' },
+	            '2005'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2006' },
+	            '2006'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2007' },
+	            '2007'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2008' },
+	            '2008'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2009' },
+	            '2009'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2010' },
+	            '2010'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2011' },
+	            '2011'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2012' },
+	            '2012'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2013' },
+	            '2013'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2013' },
+	            '2014'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '2013' },
+	            '2015'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button', onClick: this.handleSubmit },
+	          'Filter'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return CrimeFilter;
+	}(_BaseComponent3.default);
+
+	exports.default = CrimeFilter;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BaseComponent = function (_React$Component) {
+	  _inherits(BaseComponent, _React$Component);
+
+	  function BaseComponent() {
+	    _classCallCheck(this, BaseComponent);
+
+	    return _possibleConstructorReturn(this, (BaseComponent.__proto__ || Object.getPrototypeOf(BaseComponent)).apply(this, arguments));
+	  }
+
+	  _createClass(BaseComponent, [{
+	    key: '_bind',
+	    value: function _bind() {
+	      var _this2 = this;
+
+	      for (var _len = arguments.length, methods = Array(_len), _key = 0; _key < _len; _key++) {
+	        methods[_key] = arguments[_key];
+	      }
+
+	      methods.forEach(function (method) {
+	        return _this2[method] = _this2[method].bind(_this2);
+	      });
+	    }
+	  }]);
+
+	  return BaseComponent;
+	}(_react2.default.Component);
+
+	exports.default = BaseComponent;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Header = function (_React$Component) {
+	  _inherits(Header, _React$Component);
+
+	  function Header() {
+	    _classCallCheck(this, Header);
+
+	    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+	  }
+
+	  _createClass(Header, [{
+	    key: "render",
+	    value: function render() {
+	      var msg = "San Francisco Crime Map";
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "header" },
+	        _react2.default.createElement(
+	          "h1",
+	          null,
+	          msg
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Header;
+	}(_react2.default.Component);
+
+	exports.default = Header;
 
 /***/ }
 /******/ ]);
