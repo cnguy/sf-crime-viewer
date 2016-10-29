@@ -13,7 +13,6 @@ class SFCrimeViewer extends BaseComponent {
 
   onFilterChange(data) {
     this.setState(data);
-    console.log(this.state);
   }
 
   render() {

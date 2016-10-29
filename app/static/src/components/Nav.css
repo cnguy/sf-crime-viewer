@@ -1,0 +1,8 @@
+nav {
+    float: right;
+}
+
+nav > a {
+    text-decoration: none;
+    color: black;
+}
