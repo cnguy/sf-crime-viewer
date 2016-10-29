@@ -119,8 +119,8 @@ class CrimeMap extends BaseComponent {
 
   onFilterChange(data) {
     // Clear markers. and reset markers[].
-    for (let i = 0; i < markers.length; ++i) {
-      markers[i].setMap(null);
+    for (let marker in markers) {
+      marker.setMap(null);
     }
     markers = [];
 
@@ -147,13 +147,13 @@ class CrimeMap extends BaseComponent {
       center: new google.maps.LatLng(config.initialLat, config.initialLon),
     });
 
-    for (let i = 0; i < data.length; ++i) {
+    for (let crime of data) {
       markers.push(new google.maps.Marker({
         position: new google.maps.LatLng(
-          data[i].location.latitude,
-          data[i].location.longitude
+          crime.location.latitude,
+          crime.location.longitude
         ),
-        title: data[i].category
+        title: crime.category
       }));
     }
 
@@ -172,10 +172,10 @@ class CrimeMap extends BaseComponent {
     const style = {
       width: "100vw",
       height: "100vh"
-    }
+    };
 
     return (
-      <div id="app">
+      <div>
         <Header />
         <CrimeFilter onFilterChange={this.onFilterChange} />
         <div id="map" style={style}></div>

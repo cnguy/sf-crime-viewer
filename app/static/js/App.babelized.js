@@ -319,8 +319,8 @@ var CrimeMap = function (_BaseComponent2) {
     key: "onFilterChange",
     value: function onFilterChange(data) {
       // Clear markers. and reset markers[].
-      for (var i = 0; i < markers.length; ++i) {
-        markers[i].setMap(null);
+      for (var marker in markers) {
+        marker.setMap(null);
       }
       markers = [];
 
@@ -348,11 +348,32 @@ var CrimeMap = function (_BaseComponent2) {
         center: new google.maps.LatLng(config.initialLat, config.initialLon)
       });
 
-      for (var i = 0; i < data.length; ++i) {
-        markers.push(new google.maps.Marker({
-          position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
-          title: data[i].category
-        }));
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var crime = _step.value;
+
+          markers.push(new google.maps.Marker({
+            position: new google.maps.LatLng(crime.location.latitude, crime.location.longitude),
+            title: crime.category
+          }));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
       }
 
       var markerCluster = new MarkerClusterer(map, markers, {
@@ -376,7 +397,7 @@ var CrimeMap = function (_BaseComponent2) {
 
       return React.createElement(
         "div",
-        { id: "app" },
+        null,
         React.createElement(Header, null),
         React.createElement(CrimeFilter, { onFilterChange: this.onFilterChange }),
         React.createElement("div", { id: "map", style: style })
