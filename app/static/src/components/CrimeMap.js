@@ -9,7 +9,7 @@ const config = {
 };
 
 let markers = [];
-const api_base_link = 'api/v1/crimes/';
+const api_base_link = 'api/v1/crimes';
 
 function loadJSON(callback, api_link) {
     const xobj = new XMLHttpRequest();
@@ -65,19 +65,9 @@ class CrimeMap extends BaseComponent {
         }
         markers = [];
 
-        // Logic for determining what api endpoint to use.
-        let api_params = '';
-
-        if (this.props.data.year != 'all') {
-            // my api <= year -> category
-            api_params += 'years/' + this.props.data.year;
-
-            if (this.props.data.category != 'all') {
-                api_params += '/categories/' + this.props.data.category;
-            }
-        } else if (this.props.data.category != 'all') {
-            api_params += 'categories/' + this.props.data.category;
-        }
+        let api_params = '?';
+        api_params += 'year=' + this.props.data.year;
+        api_params += '&category=' + this.props.data.category;
 
         init(api_params, this.renderMap);
 
