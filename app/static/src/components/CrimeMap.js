@@ -15,7 +15,7 @@ function loadJSON(callback, api_link) {
     const xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', api_link, true);
-    xobj.onreadystatechange = function () {
+    xobj.onreadystatechange = function() {
         if (xobj.readyState == 4 && xobj.status === 200) {
             callback(xobj.responseText);
         }
@@ -24,7 +24,7 @@ function loadJSON(callback, api_link) {
 }
 
 function init(api_params, callback) {
-    loadJSON(function (response) {
+    loadJSON(function(response) {
         const data = JSON.parse(response);
         callback(data);
     }, api_base_link + api_params);
@@ -55,7 +55,10 @@ class CrimeMap extends BaseComponent {
     }
 
     componentDidMount() {
-        init('', this.renderMap);
+        let api_params = '?';
+        api_params += 'year=' + this.props.data.year;
+        api_params += '&category=' + this.props.data.category;
+        init(api_params, this.renderMap);
     }
 
     render() {
@@ -65,19 +68,14 @@ class CrimeMap extends BaseComponent {
         }
         markers = [];
 
-        let api_params = '?';
-        api_params += 'year=' + this.props.data.year;
-        api_params += '&category=' + this.props.data.category;
-
-        init(api_params, this.renderMap);
-
         const style = {
             width: "100vw",
             height: "100vh"
         };
-        
-        return (
-            <div id="map" style={style}></div>
+
+        return ( <
+            div id = "map"
+            style = { style } > < /div>
         );
     }
 }
